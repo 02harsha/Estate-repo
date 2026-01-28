@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealEstate Pro - Member Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 10 L90 40 L90 90 L60 90 L60 60 L40 60 L40 90 L10 90 L10 40 Z" fill="currentColor"/>
+                        <circle cx="50" cy="35" r="8" fill="#fff"/>
+                    </svg>
+                </div>
+                <h1>RealEstate Pro</h1>
+                <p class="tagline">Your Success, Our Foundation</p>
+            </div>
+
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+                    <button class="auth-tab" onclick="switchTab('register')">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active">
+                    <div class="input-group">
+                        <label>Email or Phone</label>
+                        <input type="text" id="loginEmail" placeholder="Enter your email or phone" required>
+                    </div>
+                    <div class="input-group">
+    <label>Password</label>
+    <div class="password-wrapper">
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <span class="toggle-password" onclick="togglePassword('loginPassword')">
+            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </span>
+    </div>
+</div>
+                    <button type="submit" class="btn-primary">Login</button>
+                    <p class="form-footer">Forgot password? <a href="#">Reset here</a></p>
+                </form>
+
+                <!-- Registration Form -->
+                <form id="registerForm" class="auth-form">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email (Optional)</label>
+                        <input type="email" id="regEmail" placeholder="Enter your email" >
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="regPhone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="input-group">
+    <label>Password</label>
+    <div class="password-wrapper">
+        <input type="password" id="regPassword" placeholder="Create a password" required>
+        <span class="toggle-password" onclick="togglePassword('regPassword')">
+            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </span>
+    </div>
+</div>
+                    <div class="input-group">
+                        <label>Referral Code (Optional)</label>
+                        <input type="text" id="regReferral" placeholder="Enter referral code if you have one">
+                    </div>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                    <p class="form-footer">By registering, you agree to our <a href="#">Terms & Conditions</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="homeScreen" class="screen">
+        <div class="home-header">
+            <div class="header-content">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <span id="userInitials">U</span>
+                    </div>
+                    <div class="user-details">
+                        <h2 id="userName">Welcome User</h2>
+                        <p id="userEmail">user@email.com</p>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="home-container">
+            <!-- Points Display -->
+            <div class="points-card">
+                <div class="points-header">
+                    <h3>Your Points</h3>
+                    <div class="points-value">
+                        <span class="points-number" id="userPoints">0</span>
+                        <span class="points-label">Points</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Coin Tap -->
+            <div class="coin-section">
+                <h3>Daily Rewards</h3>
+                <p class="coin-subtitle">Tap the coin to earn 10,000 points daily!</p>
+                <div class="coin-container" id="coinContainer">
+                    <div class="coin" id="dailyCoin">
+                        <div class="coin-inner">
+                            <div class="coin-front">
+                                <div class="coin-symbol">₹</div>
+                                <div class="coin-shine"></div>
+                            </div>
+                            <div class="coin-back">
+                                <div class="coin-symbol">₹</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="coin-status" id="coinStatus">Tap to claim!</div>
+                </div>
+            </div>
+
+            <!-- Referral Section -->
+            <div class="referral-section">
+                <h3>Refer & Earn</h3>
+                <p class="referral-subtitle">Share your code and earn 100,000 points per referral!</p>
+                <div class="referral-card">
+                    <div class="referral-code-display">
+                        <label>Your Referral Code</label>
+                        <div class="code-box" id="referralCodeBox">
+                            <span id="userReferralCode">LOADING...</span>
+                        </div>
+                    </div>
+                    <button class="btn-share" onclick="shareReferral()">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 22a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Share Referral Code
+                    </button>
+                    
+                    <!-- Referral Statistics -->
+                    <div class="referral-stats">
+                        <h4>Referral Statistics</h4>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-icon">✅</div>
+                                <div class="stat-value" id="completedReferrals">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">⏳</div>
+                                <div class="stat-value" id="pendingReferrals">0</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">👥</div>
+                                <div class="stat-value" id="totalReferrals">0</div>
+                                <div class="stat-label">Total Shared</div>
+                            </div>
+                        </div>
+                    </div>
+
+            <!-- Prize Buttons -->
+            <div class="prizes-section">
+                <h3>Mega Prizes</h3>
+                <p class="prizes-subtitle">Amazing prizes coming soon! Stay tuned.</p>
+                <div class="prizes-grid">
+                    <div class="prize-card disabled">
+                        <div class="prize-badge">Coming Soon</div>
+                        <div class="prize-icon">🏆</div>
+                        <div class="prize-amount">₹5 Crore</div>
+                        <div class="prize-label">Grand Prize</div>
+                    </div>
+                    <div class="prize-card disabled">
+                        <div class="prize-badge">Coming Soon</div>
+                        <div class="prize-icon">💎</div>
+                        <div class="prize-amount">₹50 Crore</div>
+                        <div class="prize-label">Super Prize</div>
+                    </div>
+                    <div class="prize-card disabled">
+                        <div class="prize-badge">Coming Soon</div>
+                        <div class="prize-icon">👑</div>
+                        <div class="prize-amount">₹100 Crore</div>
+                        <div class="prize-label">Ultimate Prize</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
