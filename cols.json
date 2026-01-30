@@ -1,0 +1,10 @@
+[
+  "id",
+  "full_name",
+  "email",
+  "phone_number",
+  "password",
+  "referral_code",
+  "created_at",
+  "last_check_in_date"
+]
