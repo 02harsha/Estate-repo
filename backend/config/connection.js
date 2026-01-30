@@ -1,20 +1,25 @@
-const mysql = require("mysql2");
+import sql from "mssql/msnodesqlv8.js";
 
-// Create connection
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "your_password",
-  database: "your_database"
-});
+const config = {
+  server: "localhost",
+  database: "EstateDB",
 
-// Connect
-db.connect((err) => {
-  if (err) {
-    console.log("Database connection failed:", err);
-  } else {
-    console.log("MySQL Connected Successfully!");
-  }
-});
+  options: {
+    trustedConnection: true,
+    trustServerCertificate: true,
+  },
 
-module.exports = db;
+  driver: "msnodesqlv8",
+
+  connectionString:
+    "Driver={SQL Server};Server=localhost;Database=EstateDB;Trusted_Connection=Yes;",
+};
+
+try {
+  await sql.connect(config);
+  console.log("✅ Connected to SQL Server Successfully!");
+} catch (err) {
+  console.log("❌ SQL Connection Error:", err);
+}
+
+export { sql };

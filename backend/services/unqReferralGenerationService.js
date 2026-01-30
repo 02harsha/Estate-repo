@@ -1,6 +1,5 @@
-const { v4: uuidv4 } = require("uuid");
+import { v4 as uuidv4 } from "uuid";
 
-export function generateReferralUUID() {
-  return "REF"+uuidv4().slice(0, 8).toUpperCase();
-}
-
+export const generateReferralUUID = () => {
+  return uuidv4().slice(0, 8).toUpperCase();
+};

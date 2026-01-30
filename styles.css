@@ -528,6 +528,10 @@ body {
     padding: 20px;
     text-align: center;
     margin-bottom: 20px;
+    position: relative; /* Added for absolute positioning of copy button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .code-box span {
@@ -538,6 +542,36 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+.btn-copy {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(99, 102, 241, 0.1); /* Light primary bg */
+    border: 1px solid var(--primary-color);
+    color: var(--primary-light);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-copy:hover {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+.btn-copy svg {
+    width: 16px;
+    height: 16px;
 }
 
 .btn-share {

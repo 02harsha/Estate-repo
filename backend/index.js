@@ -1,7 +1,9 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
 
-const userRoutes = require("./routes/UserRoutes");
+import userRoutes from "./routes/UserRoutes.js";
+import pointsRoutes from "./routes/PointsRoutes.js";
+import "./config/connection.js";
 
 const app = express();
 
@@ -11,8 +13,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/points", pointsRoutes);
 
 // Server Start
 app.listen(3000, () => {
-  console.log("✅ API running on http://localhost:3000");
+  console.log("API running on http://localhost:3000");
 });
