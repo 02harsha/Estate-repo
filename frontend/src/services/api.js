@@ -89,5 +89,22 @@ export const api = {
             console.error('Tap coin error:', error);
             return { success: false, message: 'Network error' };
         }
+    },
+
+
+    async getReferralStats(userId) {
+        try {
+            const response = await fetch(`${BASE_URL}/points/getReferralStats`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId })
+            });
+            const data = await response.json();
+            if (response.ok && data.completedReferrals) {
+                return data;
+            }
+        } catch (e) {
+            console.error('Get referral stats error:', e);
+        }
     }
 };

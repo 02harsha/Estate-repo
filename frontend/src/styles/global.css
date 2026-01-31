@@ -214,6 +214,18 @@ body {
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
+.input-group input.error {
+    border-color: var(--danger-color);
+}
+
+.error-text {
+    color: var(--danger-color);
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+
 .btn-primary {
     width: 100%;
     padding: 16px;

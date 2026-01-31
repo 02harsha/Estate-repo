@@ -4,7 +4,7 @@ import { Copy, Share2, Check, Clock, Users } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 const ReferralSection = () => {
-    const { user, updateStats } = useAuth();
+    const { user, updateStats} = useAuth();
     const [showShareModal, setShowShareModal] = useState(false);
     const [showCopyPopup, setShowCopyPopup] = useState(false);
 

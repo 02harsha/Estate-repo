@@ -16,6 +16,13 @@ const DailyCoin = () => {
         return () => clearInterval(timer);
     }, [user.lastCoinTap]);
 
+
+
+    useEffect(()=>{
+        refreshPoints(user.id);
+        
+    },[isTapped])
+
     const checkStatus = () => {
         if (!user.lastCoinTap) {
             setDisabled(false);
@@ -62,6 +69,7 @@ const DailyCoin = () => {
             // Update context
             updateStats({ lastCoinTap: new Date().toISOString() });
             refreshPoints(user.id);
+            
         } else {
             toast.error(result.message);
         }

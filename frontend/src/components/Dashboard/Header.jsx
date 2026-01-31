@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { LogOut, User, ChevronDown } from 'lucide-react';
 
@@ -35,13 +36,15 @@ const Header = () => {
         <div className="home-header">
             <div className="header-content">
                 <div className="header-brand">
-                    <h2>100CRORECLUB MNC</h2>
+                    <Link to="/" style={{ textDecoration: 'none' }}>
+                        <h2>100CRORECLUB MNC</h2>
+                    </Link>
                 </div>
 
                 <nav className="header-nav">
-                    <a href="#about">About Us</a>
-                    <a href="#services">Services</a>
-                    <a href="#contact">Contact</a>
+                    <Link to="/about">About Us</Link>
+                    <Link to="/services">Services</Link>
+                    <Link to="/contact">Contact</Link>
                 </nav>
 
                 <div className="header-right" ref={dropdownRef}>

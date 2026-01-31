@@ -5,6 +5,9 @@ import AuthContainer from './components/Auth/AuthContainer';
 import HomeScreen from './components/Dashboard/HomeScreen';
 import Particles from './components/Particles';
 import { Toaster } from 'react-hot-toast';
+import AboutUs from './components/Pages/AboutUs';
+import Services from './components/Pages/Services';
+import Contact from './components/Pages/Contact';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -44,6 +47,21 @@ const App = () => {
         <Route path="/" element={
           <ProtectedRoute>
             <HomeScreen />
+          </ProtectedRoute>
+        } />
+        <Route path="/about" element={
+          <ProtectedRoute>
+            <AboutUs />
+          </ProtectedRoute>
+        } />
+        <Route path="/services" element={
+          <ProtectedRoute>
+            <Services />
+          </ProtectedRoute>
+        } />
+        <Route path="/contact" element={
+          <ProtectedRoute>
+            <Contact />
           </ProtectedRoute>
         } />
         <Route path="*" element={<Navigate to="/" replace />} />

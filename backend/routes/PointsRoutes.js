@@ -1,5 +1,5 @@
 import express from "express";
-import {addPointsOnDailyCheckIn,getCurrentPoints} from "../controllers/pointsController.js"
+import {addPointsOnDailyCheckIn,getCurrentPoints,getReferralStats} from "../controllers/pointsController.js"
 
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
 
 router.post("/addPointsOnDailyCheckIn",addPointsOnDailyCheckIn)
 router.post("/getCurrentPoints",getCurrentPoints)
+router.post("/getReferralStats",getReferralStats)
 
 
 export default router;

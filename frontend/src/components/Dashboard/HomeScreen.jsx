@@ -6,11 +6,11 @@ import ReferralSection from './ReferralSection';
 import { useAuth } from '../../context/AuthContext';
 
 const HomeScreen = () => {
-    const { user, refreshPoints } = useAuth();
+    const { user, refreshPoints,refreshReferralStats } = useAuth();
 
     useEffect(() => {
-        // Refresh points on mount
         refreshPoints(user.id);
+        refreshReferralStats(user.id);
     }, []);
 
     return (

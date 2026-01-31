@@ -12,6 +12,7 @@ const RegisterForm = ({ onSuccess }) => {
         password: '',
         referralCode: ''
     });
+    const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { register } = useAuth();
@@ -25,13 +26,33 @@ const RegisterForm = ({ onSuccess }) => {
         }
     }, [searchParams]);
 
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!formData.name) newErrors.name = 'Full Name is required';
+        else if (formData.name.trim().length < 3) newErrors.name = 'Name must be at least 3 characters';
+
+        if (!formData.place) newErrors.place = 'Place is required';
+        else if (formData.place.trim().length < 3) newErrors.place = 'Place must be at least 3 characters';
+
+        const phoneRegex = /^\d{10}$/;
+        if (!formData.phone) newErrors.phone = 'Phone Number is required';
+        else if (!phoneRegex.test(formData.phone)) newErrors.phone = 'Enter a valid 10-digit phone number';
+
+        if (!formData.password) newErrors.password = 'Password is required';
+        else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
 
-        if (!formData.name || !formData.phone || !formData.place || !formData.password) {
-            toast.error('Please fill all required fields');
+        if (!validateForm()) {
             setIsLoading(false);
+            // toast.error('Please fix the errors in the form');
             return;
         }
 
@@ -46,13 +67,20 @@ const RegisterForm = ({ onSuccess }) => {
             );
 
             if (result.success) {
-                toast.success(result.message);
+                toast.success('User Registration Successful! Please login.');
                 onSuccess(formData.phone);
             } else {
-                toast.error(result.message);
+                const newErrors = {};
+                // Handle specific backend validation messages
+                if (result.message.toLowerCase().includes('phone') && result.message.toLowerCase().includes('exists')) {
+                    newErrors.phone = result.message;
+                } else {
+                    toast.error(result.message);
+                }
+                setErrors(newErrors);
             }
         } catch (error) {
-            toast.error('Registration failed');
+            toast.error('Registration failed. Please try again.');
         } finally {
             setIsLoading(false);
         }
@@ -60,6 +88,10 @@ const RegisterForm = ({ onSuccess }) => {
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
+        // Clear error when user types
+        if (errors[e.target.id]) {
+            setErrors({ ...errors, [e.target.id]: '' });
+        }
     };
 
     return (
@@ -70,10 +102,11 @@ const RegisterForm = ({ onSuccess }) => {
                     type="text"
                     id="name"
                     placeholder="Enter your full name"
-                    required
                     value={formData.name}
                     onChange={handleChange}
+                    className={errors.name ? 'error' : ''}
                 />
+                {errors.name && <span className="error-text">{errors.name}</span>}
             </div>
             <div className="input-group">
                 <label>Place</label>
@@ -81,10 +114,11 @@ const RegisterForm = ({ onSuccess }) => {
                     type="text"
                     id="place"
                     placeholder="Enter your place"
-                    required
                     value={formData.place}
                     onChange={handleChange}
+                    className={errors.place ? 'error' : ''}
                 />
+                {errors.place && <span className="error-text">{errors.place}</span>}
             </div>
             <div className="input-group">
                 <label>Phone Number</label>
@@ -92,10 +126,11 @@ const RegisterForm = ({ onSuccess }) => {
                     type="tel"
                     id="phone"
                     placeholder="Enter your phone number"
-                    required
                     value={formData.phone}
                     onChange={handleChange}
+                    className={errors.phone ? 'error' : ''}
                 />
+                {errors.phone && <span className="error-text">{errors.phone}</span>}
             </div>
             <div className="input-group">
                 <label>Password</label>
@@ -104,14 +139,15 @@ const RegisterForm = ({ onSuccess }) => {
                         type={showPassword ? "text" : "password"}
                         id="password"
                         placeholder="Create a password"
-                        required
                         value={formData.password}
                         onChange={handleChange}
+                        className={errors.password ? 'error' : ''}
                     />
                     <span className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </span>
                 </div>
+                {errors.password && <span className="error-text">{errors.password}</span>}
             </div>
             <div className="input-group">
                 <label>Referral Code (Optional)</label>

@@ -55,8 +55,14 @@ export const AuthProvider = ({ children }) => {
         setUser(prev => prev ? { ...prev, ...updates } : prev);
     }
 
+    const refreshReferralStats = async (userId) => {
+        const stats = await api.getReferralStats(userId || user?.id);
+        setUser(prev => prev ? { ...prev, ...stats } : prev);
+        return stats;
+    }
+
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, refreshPoints, updateStats }}>
+        <AuthContext.Provider value={{ user, login, register, logout, refreshPoints, updateStats,refreshReferralStats }}>
             {children}
         </AuthContext.Provider>
     );

@@ -55,3 +55,21 @@ export const getCurrentPoints = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+export const getReferralStats = async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
+        const user = result.recordset[0];
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        const referral_code = user.referral_code;
+        const statsResult = await sql.query`SELECT count(*) as completedReferrals FROM users WHERE referred_by = ${referral_code}`;
+        const stats = statsResult.recordset[0];
+        return res.json({ completedReferrals:stats.completedReferrals });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
